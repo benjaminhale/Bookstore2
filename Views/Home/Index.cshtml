@@ -3,7 +3,6 @@
 }
 
 @model BookListViewModel
-
 <!--Holds the actual html usage of the data in the database-->
 <!--Extra Boostrap commands:
     1. bg-dark
@@ -14,35 +13,11 @@
 
 @foreach (var x in Model.Books)
 {
-    <div class="card card-outline-primary m-1 p-1 text-white">
-        <div class="bg-dark p-1">
-            <h4>
-                Title: @x.Title
-                <span class="badge badge-pill badge-primary" style="float:right">
-                    <p>
-                        Author: @x.AuthorFirst
-                        @if (x.AuthorMiddle != " ")
-                        {
-                            @x.AuthorMiddle
-                        }
-                        @x.AuthorLast
-                    </p>
-                </span>
-            </h4>
-            <p>ISBN: @x.ISBN</p>
-            <div class="card-text p-1">
-                <p>Publisher: @x.Publisher</p>
-            </div>
-            <p class="text-danger">Classification: @x.Classification</p>
-            <p class="text-warning">Category: @x.Category</p>
-            <p class="text-muted">Price: $@x.Price</p>
-            <p>Pages: @x.NumPages</p>
-        </div>
-        
-    </div>
+    <partial name="BookSummary" model="x" />
 }
 
 <div page-model="@Model.PagingInfo" page-action="Index" page-classes-enabled="true" page-class="btn"
      page-class-normal="btn-outline-dark"
-     page-class-selected="btn-primary"
-     class="btn-group pull-right m-1"></div>
+     page-class-selected="btn-primary" page-url-category="@Model.CurrentCategory"
+     class="btn-group pull-right m-1"></div>    
+ <!--Because we've set it up for 'page-url-' to have something else, we can put whatever we want after it-->

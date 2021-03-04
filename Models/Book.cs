@@ -33,6 +33,5 @@ namespace Bookstore2.Models
         public double Price { get; set; }
         [Required]
         public int NumPages { get; set; }
-
     }
 }
