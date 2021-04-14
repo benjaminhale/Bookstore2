@@ -29,23 +29,23 @@ namespace Bookstore2.Controllers
         public IActionResult Index(string category, int pageNum = 1)
         {
             return View(new BookListViewModel
+            {
+                Books = _repository.Books
+                    .Where(p => category == null || p.Category == category)
+                    .OrderBy(p => p.BookId)
+                    .Skip((pageNum - 1) * PageSize)
+                    .Take(PageSize)
+                ,
+                PagingInfo = new PagingInfo
                 {
-                    Books = _repository.Books
-                        .Where(p => category == null || p.Category == category)
-                        .OrderBy(p => p.BookId)
-                        .Skip((pageNum - 1) * PageSize)
-                        .Take(PageSize)
-                    ,
-                    PagingInfo = new PagingInfo
-                    {
-                        CurrentPage = pageNum,
-                        ItemsPerPage = PageSize,
-                        TotalNumItems = category == null ? _repository.Books.Count() :
-                            _repository.Books.Where (x => x.Category == category).Count()
-                    },
-                    CurrentCategory = category
+                    CurrentPage = pageNum,
+                    ItemsPerPage = PageSize,
+                    TotalNumItems = category == null ? _repository.Books.Count() :
+                        _repository.Books.Where (x => x.Category == category).Count()
+                },
+                CurrentCategory = category
 
-                });
+            });
         }
 
         public IActionResult Privacy()
